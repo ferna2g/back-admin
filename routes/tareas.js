@@ -5,11 +5,12 @@ const auth = require('../middleware/auth');
 const { check } = require('express-validator');
 
 //crear una tarea
-// api/tareas 
+// api/tareas
 router.post('/',
   auth,
   [
-    check('nombre', 'El nombre es obligatorio').not().isEmpty()
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('proyecto', 'El proyecto es obligatorio').not().isEmpty()
   ],
   tareaController.crearTarea
 );
