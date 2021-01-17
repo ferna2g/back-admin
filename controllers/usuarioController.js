@@ -1,4 +1,4 @@
-const usuario = require('../models/Usuario');
+const Usuario = require('../models/Usuario');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -19,7 +19,7 @@ exports.crearUsuario = async (req, res) => {
     let usuario = await Usuario.findOne({ email });
 
     if(usuario) {
-      return res.status(400).json({ msg: 'El usuari ya existe'})
+      return res.status(400).json({ msg: 'El usuario ya existe'})
     }
 
     //crea el nuevo usuario
