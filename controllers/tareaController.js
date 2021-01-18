@@ -11,7 +11,7 @@ exports.crearTarea = async (req, res) => {
     return res.status(400).json({errores: errores.array() })
   }
 
-  //extraer el proyecto y comprobar is existe
+  //extraer el proyecto y comprobar si existe
   const { proyecto } = req.body;
 
   try {
@@ -21,7 +21,7 @@ exports.crearTarea = async (req, res) => {
       return res.status(404).json({msg: 'Proyecto no encontrado'})
     }
 
-    //Revisar si el proyecto acutal pertenece al usuario autenticado
+    //Revisar si el proyecto actual pertenece al usuario autenticado
     if (existeProyecto.creador.toString() !== req.usuario.id ) {
         return res.status(401).json({msg: 'No autorizado'});
     }
@@ -49,7 +49,7 @@ exports.obtenerTareas = async (req, res) => {
       return res.status(404).json({msg: 'Proyecto no encontrado'})
     }
 
-    //Revisar si el proyecto acutal pertenece al usuario autenticado
+    //Revisar si el proyecto actual pertenece al usuario autenticado
     if (existeProyecto.creador.toString() !== req.usuario.id ) {
         return res.status(401).json({msg: 'No autorizado'});
     }
@@ -81,12 +81,12 @@ exports.actualizarTarea = async (req, res) => {
     //extraer proyecto
     const existeProyecto = await Proyecto.findById(proyecto);
 
-    //Revisar si el proyecto acutal pertenece al usuario autenticado
+    //Revisar si el proyecto actual pertenece al usuario autenticado
     if (existeProyecto.creador.toString() !== req.usuario.id ) {
         return res.status(401).json({msg: 'No autorizado'});
     }
 
-    //crear un objeto con la neuva informacion
+    //crear un objeto con la nueva informacion
     const nuevaTarea = {};
 
     if (nombre) {
@@ -127,7 +127,7 @@ exports.eliminarTarea = async (req, res) => {
     //extraer proyecto
     const existeProyecto = await Proyecto.findById(proyecto);
 
-    //Revisar si el proyecto acutal pertenece al usuario autenticado
+    //Revisar si el proyecto actual pertenece al usuario autenticado
     if (existeProyecto.creador.toString() !== req.usuario.id ) {
         return res.status(401).json({msg: 'No autorizado'});
     }

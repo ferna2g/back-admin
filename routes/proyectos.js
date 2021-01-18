@@ -20,7 +20,7 @@ router.get('/',
   proyectoController.obtenerProyectos
 )
 
-//actualizar proyectos via ID
+//actualizar proyectos por el ID
 router.put('/:id',
   auth,
   [
