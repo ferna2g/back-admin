@@ -70,8 +70,7 @@ exports.actualizarProyecto = async (req, res) => {
     }
 
     //actualizar
-    proyecto = await Proyecto.findByIdAndUpdate({ _id: req.params.id }, { $set: nuevoProyecto},
-                { new: true })
+    proyecto = await Proyecto.findByIdAndUpdate({ _id: req.params.id }, { $set: nuevoProyecto}, { new: true })
 
     res.json({proyecto})
 
