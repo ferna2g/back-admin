@@ -11,10 +11,10 @@ exports.crearTarea = async (req, res) => {
     return res.status(400).json({errores: errores.array() })
   }
 
-  //extraer el proyecto y comprobar si existe
-  const { proyecto } = req.body;
-
   try {
+
+    //extraer el proyecto y comprobar si existe
+    const { proyecto } = req.body;
 
     const existeProyecto = await Proyecto.findById(proyecto);
     if (!existeProyecto) {
@@ -42,7 +42,7 @@ exports.obtenerTareas = async (req, res) => {
 
   try {
     //extraer el proyecto y comprobar si existe
-    const { proyecto } = req.body;
+    const { proyecto } = req.query;
 
     const existeProyecto = await Proyecto.findById(proyecto);
     if (!existeProyecto) {
@@ -55,8 +55,8 @@ exports.obtenerTareas = async (req, res) => {
     }
 
     //obtener tareas por proyecto
-    const tareas = await Tarea.find({ proyecto  });
-    res.json(tareas)
+    const tareas = await Tarea.find({ proyecto  }).sort({ creado: -1});
+    res.json({ tareas })
 
   } catch (e) {
     console.log(e);
@@ -88,15 +88,8 @@ exports.actualizarTarea = async (req, res) => {
 
     //crear un objeto con la nueva informacion
     const nuevaTarea = {};
-
-    if (nombre) {
-      nuevaTarea.nombre = nombre;
-
-    }
-
-    if (estado) {
-      nuevaTarea.estado = estado;
-    }
+    nuevaTarea.nombre = nombre;
+    nuevaTarea.estado = estado;
 
     //guardar la tarea
     tarea = await Tarea.findOneAndUpdate({_id: req.params.id}, nuevaTarea, { new: true});
@@ -106,8 +99,6 @@ exports.actualizarTarea = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).send('Hubo un error')
-  } finally {
-
   }
 }
 
@@ -115,7 +106,7 @@ exports.actualizarTarea = async (req, res) => {
 exports.eliminarTarea = async (req, res) => {
   try {
     //extraer el proyecto y comprobar si existe
-    const { proyecto } = req.body;
+    const { proyecto } = req.query;
 
     //si la tarea existe o no
     let tarea = await Tarea.findById(req.params.id);
@@ -139,7 +130,5 @@ exports.eliminarTarea = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).send('Hubo un error')
-  } finally {
-
   }
 }
